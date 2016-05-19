@@ -29,9 +29,19 @@ public class SeleniumTest {
     public static void setUp() throws IOException {
         logger.info("starting webdriver");
         driver = new ChromeDriver(new OwnBuilder().usingAnyFreePort().build());
+        logger.info("maximizing the browser");
         driver.manage().window().maximize();
         logger.info("navigating to app");
         driver.get("localhost:8080");
+    }
+
+    @AfterClass
+    public static void teardown() {
+        logger.info("killing webdriver");
+        if (driver != null) {
+            driver.close();
+            driver.quit();
+        }
     }
 
     @Category(UI.class)
@@ -44,6 +54,23 @@ public class SeleniumTest {
         Assert.assertTrue("test of message text failed", form.getLineText(3).contains("#3: Andrej - hope this damn thing works :))"));
     }
 
+    /**
+     * call this method to slow down the test
+     *
+     * @param pauseMls pause in milliseconds
+     */
+    private void pause(long pauseMls) {
+        try {
+            Thread.sleep(pauseMls);
+        } catch (InterruptedException ignore) {
+        }
+    }
+
+    /**
+     * custom implementation to find chromedriver in resources for win / mac
+     *
+     * @author AndrejS
+     */
     private static class OwnBuilder extends ChromeDriverService.Builder {
 
         @Override
@@ -61,13 +88,5 @@ public class SeleniumTest {
             return System.getProperty("os.name").toLowerCase().startsWith("windows");
         }
 
-    }
-
-    @AfterClass
-    public static void teardown() {
-        if (driver != null) {
-            driver.close();
-            driver.quit();
-        }
     }
 }

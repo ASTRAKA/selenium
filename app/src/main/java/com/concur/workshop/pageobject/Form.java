@@ -29,4 +29,8 @@ public class Form {
     public String getLineText(int lineIndex) {
         return driver.findElement(By.xpath("//p[" + lineIndex + "]")).getText();
     }
+
+    public int getCountOfMessages() {
+        return driver.findElements(By.xpath("//p")).size();
+    }
 }
