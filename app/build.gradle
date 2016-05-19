@@ -1,0 +1,13 @@
+def mainClass = 'com.concur.workshop.Starter'
+
+jar {
+    manifest {
+        attributes('Main-Class': mainClass)
+    }
+}
+
+task run(type: JavaExec) {
+    classpath = files(jar.archivePath.getAbsolutePath())
+    classpath += sourceSets.main.runtimeClasspath
+    main = mainClass
+}

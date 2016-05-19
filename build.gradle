@@ -1,0 +1,79 @@
+ext {
+    jettyVersion = '9.2.15.v20160210'
+    slf4jVersion = '2.4'
+    powermockVersion = '1.6.4'
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'checkstyle'
+    apply plugin: 'findbugs'
+    apply plugin: 'jacoco'
+
+    repositories {
+        mavenCentral()
+    }
+
+    group = 'com.concur.workshop'
+    version = '0.1.0'
+
+    tasks.withType(FindBugs) {
+        reports {
+            xml.enabled = false
+            html.enabled = true
+        }
+    }
+
+    findbugs {
+        ignoreFailures = true
+    }
+
+    jacoco {
+        toolVersion = "0.7.6.201602180812"
+        reportsDir = file("$buildDir/coverageReport")
+    }
+
+
+    dependencies {
+        compile group: 'org.eclipse.jetty.aggregate', name: 'jetty-all', version: jettyVersion
+        compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: slf4jVersion
+        compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: slf4jVersion
+        compile group: 'org.apache.logging.log4j', name: 'log4j-web', version: slf4jVersion
+        compile group: 'com.google.code.findbugs', name: 'annotations', version: '3.0.1u2'
+        compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.53.0'
+        testCompile 'junit:junit:4.12'
+        testCompile "org.powermock:powermock-mockito-release-full:$powermockVersion"
+    }
+
+    sourceSets {
+        apiTest {
+            java.srcDir file('src/test/java')
+            resources.srcDir file('src/test/resources')
+        }
+    }
+
+    test {
+        outputs.upToDateWhen { false }
+        logging.captureStandardOutput LogLevel.INFO
+    }
+
+
+    task apiTest(type: Test) {
+        testClassesDir = sourceSets.test.output.classesDir
+        classpath = sourceSets.test.runtimeClasspath
+        outputs.upToDateWhen { false }
+        logging.captureStandardOutput LogLevel.INFO
+        useJUnit {
+            includeCategories 'com.concur.workshop.categories.Api'
+        }
+    }
+
+    task uiTest(type: Test) {
+        outputs.upToDateWhen { false }
+        logging.captureStandardOutput LogLevel.INFO
+        useJUnit {
+            includeCategories 'com.concur.workshop.categories.UI'
+        }
+    }
+}
