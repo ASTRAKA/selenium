@@ -1,6 +1,8 @@
 package com.concur.workshop.servlet;
 
+import com.concur.workshop.categories.Api;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 
@@ -18,6 +20,7 @@ import static org.mockito.Mockito.when;
  */
 public class ListMessagesTest {
 
+    @Category(Api.class)
     @Test
     public void testListMessageTest() throws IOException {
 

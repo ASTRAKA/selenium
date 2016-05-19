@@ -32,6 +32,7 @@ public class SeleniumTest {
         logger.info("maximizing the browser");
         driver.manage().window().maximize();
         logger.info("navigating to app");
+        // TODO: complete URL to navigate in your browser
         driver.get("localhost:8080");
     }
 
@@ -48,6 +49,8 @@ public class SeleniumTest {
     @Test
     public void testMessages() {
         Form form = new Form(driver);
+        // TODO: write test which will set your name, some message, click sends button and assert that
+        // there's added one more line and that the last line contains the text you added
         form.setNickname("Andrej");
         form.setMessage("hope this damn thing works :))");
         form.sendMessage();
@@ -64,6 +67,15 @@ public class SeleniumTest {
             Thread.sleep(pauseMls);
         } catch (InterruptedException ignore) {
         }
+    }
+
+    /**
+     * This method returns unique String every time it's called
+     *
+     * @return unique string
+     */
+    private String getUniqueString() {
+        return String.valueOf(System.currentTimeMillis());
     }
 
     /**
