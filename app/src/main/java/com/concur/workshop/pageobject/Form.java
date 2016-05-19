@@ -20,7 +20,6 @@ public class Form {
      * @param nickname to be entered
      */
     public void setNickname(String nickname) {
-        driver.findElement(By.xpath("//input[@name='nickname']")).sendKeys(nickname);
     }
 
     /**
@@ -30,7 +29,6 @@ public class Form {
      */
     public void setMessage(String message) {
         // TODO: implement
-        driver.findElement(By.xpath("//textarea[@name='text']")).sendKeys(message);
     }
 
     /**
@@ -38,7 +36,6 @@ public class Form {
      */
     public void sendMessage() {
         // TODO: implement - hint: use click
-        driver.findElement(By.xpath("//input[@name='send_message']")).click();
     }
 
     /**
@@ -49,7 +46,7 @@ public class Form {
      */
     public String getLineText(int lineIndex) {
         // TODO: implement - hint: use get text
-        return driver.findElement(By.xpath("//p[" + lineIndex + "]")).getText();
+        return null;
     }
 
     /**
@@ -59,6 +56,6 @@ public class Form {
      */
     public int getCountOfMessages() {
         // TODO: implement - hint: do not use findElement but search how many p elements are in the DOM
-        return driver.findElements(By.xpath("//p")).size();
+        return 0;
     }
 }
